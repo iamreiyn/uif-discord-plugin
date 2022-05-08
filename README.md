@@ -1,9 +1,15 @@
-# uif-discord-plugin
-A very simple and beginner friendly SA-MP rich presence plugin powered by Lua and moonloader.
+# UIF Discord RPC
+UIF server SA-MP rich presence plugin powered by Lua and moonloader.
 
-# Installation
-Download the "release" folder as .zip and extract into your GTA San Andreas Root Directory
+#### Requirements
+- [ASI Loader](https://www.gtagarage.com/mods/show.php?id=21709)
+- [Moonloader](https://gtaforums.com/topic/890987-moonloader/)
+- [SAMPFUNCS](https://libertycity.net/files/gta-san-andreas/151974-sampfuncs-v.-5.4.1.-final.html)
 
-# Screenshots
-![Screenshot](blob:https://imgur.com/bf9d409f-98c8-45eb-b870-369288cfb6b8) ![Screenshot](https://i.imgur.com/wogbubs.png)
+### Installation
+Make sure to have the prerequisites installed which are mentioned above.
+Download the file as a .zip and extract the contents of <b>release</b> into your moonloader's director.
+
+### Screenshots
+![Screenshot](https://i.imgur.com/6D2B5Eu.png) ![Screenshot](https://i.imgur.com/89CpqgK.png)
 
