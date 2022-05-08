@@ -490,7 +490,17 @@ local weapons = {
 local drpc = ffi.load("moonloader/lib/discord-rpc.dll")
 local rpc = ffi.new("DiscordRichPresence")
 
+--[Your discord Keys]
+
+local discordAssets = {
+    AppID = "your_discord_App_Id",
+    largeImageKey = "uif_new", -- Your large image key asset
+    largeImageText = "play.uifserver.net:7776",
+}
+
+
 function main()
+
     if not isSampLoaded() or not isSampfuncsLoaded() then return end
 	while not isSampAvailable() do wait(2000) end
 
@@ -498,7 +508,7 @@ function main()
 		return
 	end
 
-	drpc.Discord_Initialize("", 0, 0, "")
+	drpc.Discord_Initialize(discordAssets.AppID, 0, 0, "")
 		
 	repeat
 		wait(0)
@@ -523,7 +533,7 @@ function main()
 	local cped = ffi.cast("CPed*", getCharPointer(playerPed))
 
 	while true do
-		rpc.largeImageKey = "uif_new"
+		rpc.largeImageKey = discordAssets.largeImageKey
 		
 		if flag then
 			if samp == 2 then
@@ -597,11 +607,9 @@ function main()
 				flag = true
 				time = os.time()
 			end
-
-
 		end
 
-		rpc.largeImageText = string.format("play.uifserver.net:7776")
+		rpc.largeImageText = discordAssets.largeImageText
 
 		local currWeap = getCurrentCharWeapon(playerPed)
 		local wpName = weapons[currWeap] or ""
