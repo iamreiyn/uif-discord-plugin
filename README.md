@@ -1,5 +1,5 @@
 # UIF Discord RPC
-UIF server GTA San Andreas (SA-MP) rich presence plugin powered by Lua and moonloader.
+UIF server San Andreas Multiplayer rich presence plugin powered by Lua and moonloader.
 
 #### Requirements
 - [ASI Loader](https://www.gtagarage.com/mods/show.php?id=21709)
