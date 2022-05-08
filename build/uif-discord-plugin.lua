@@ -498,7 +498,7 @@ function main()
 		return
 	end
 
-	drpc.Discord_Initialize("840268646206144552", 0, 0, "")
+	drpc.Discord_Initialize("", 0, 0, "")
 		
 	repeat
 		wait(0)
