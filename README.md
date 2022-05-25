@@ -34,7 +34,7 @@ And if you have any suggestions, feel free to suggest here or contact me on disc
 | Small Image Text  | Player's State (Lost/Standing)  |
 | Details(1)  | Current Fall Map name  |
 | Details(2)  | Current Mode |
-
+#
 ### Library
 
 If you want to learn more about SA-MP moonloader & Lua and what can you display in your plugin:<br>
