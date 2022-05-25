@@ -16,10 +16,10 @@ Download and extract the contents of <b>[release](https://github.com/renisal/uif
 ### Library
 
 If you want to learn more about SA-MP moonloader & Lua and what can you display in your plugin:<br>
-- Lua's Reference Manual: https://www.lua.org/manual/5.4/
-- Moonloader's Wiki: https://wiki.blast.hk/
-- Moonloader's Scripting API: https://wiki.blast.hk/moonloader/scripting-api
-- Discord's RPC: https://github.com/discord/discord-rpc
+- [Lua Reference Manual](https://www.lua.org/manual/5.4/)
+- [Moonloader Wiki](https://wiki.blast.hk/)
+- [Moonloader Scripting API](https://wiki.blast.hk/moonloader/scripting-api)
+- [Discord RPC](https://github.com/discord/discord-rpc)
 
 
 ### RPC Values
