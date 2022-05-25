@@ -13,15 +13,6 @@ Download and extract the contents of <b>[release](https://github.com/renisal/uif
 ### Screenshots
 ![Screenshot](https://i.imgur.com/6D2B5Eu.png) ![Screenshot](https://i.imgur.com/89CpqgK.png)
 #
-### Library
-
-If you want to learn more about SA-MP moonloader & Lua and what can you display in your plugin:<br>
-- [Lua Reference Manual](https://www.lua.org/manual/5.4/)
-- [Moonloader Wiki](https://wiki.blast.hk/)
-- [Moonloader Scripting API](https://wiki.blast.hk/moonloader/scripting-api)
-- [Discord RPC](https://github.com/discord/discord-rpc)
-
-
 ### RPC Values
 
 While these are the values by default, you are free to edit the script as you like<br>
@@ -43,3 +34,11 @@ And if you have any suggestions, feel free to suggest here or contact me on disc
 | Small Image Text  | Player's State (Lost/Standing)  |
 | Details(1)  | Current Fall Map name  |
 | Details(2)  | Current Mode |
+
+### Library
+
+If you want to learn more about SA-MP moonloader & Lua and what can you display in your plugin:<br>
+- [Lua Reference Manual](https://www.lua.org/manual/5.4/)
+- [Moonloader Wiki](https://wiki.blast.hk/)
+- [Moonloader Scripting API](https://wiki.blast.hk/moonloader/scripting-api)
+- [Discord RPC](https://github.com/discord/discord-rpc)
