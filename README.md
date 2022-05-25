@@ -8,7 +8,7 @@ UIF server San Andreas Multiplayer rich presence plugin powered by Lua and moonl
 #
 ### Installation
 Make sure to have the prerequisites installed which are mentioned above.<br>
-Download the file as a .zip and extract the contents of <b>[release](https://github.com/renisal/uif-discord-plugin/releases/download/stable/release.zip)</b> into your moonloader's directory.
+Download and extract the contents of <b>[release](https://github.com/renisal/uif-discord-plugin/releases/download/stable/release.zip)</b> into your moonloader's directory.
 #
 ### Screenshots
 ![Screenshot](https://i.imgur.com/6D2B5Eu.png) ![Screenshot](https://i.imgur.com/89CpqgK.png)
