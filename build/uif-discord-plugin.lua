@@ -5,6 +5,10 @@ script_dependencies(
 	"forced-reloading-only"
 )
 
+local sampev = require 'lib.samp.events'
+local uifAppAssets = { uifLogoKey = "Your_Icon_Key", appId = "Your_App_ID"}
+local modeString, Fell, strSmall, modeName = "Freeroam", true, "Fell, spectating"
+
 local ffi = require("ffi")
 function calculateZoneEN(x, y, z)
     local streets = {
@@ -436,71 +440,10 @@ ffi.cdef([[
 	} CPed;
 ]])
 
-local weapons = {
-	[0] = "Fist",
-	[1] = "Brass Knuckles",
-	[2] = "Golf Club",
-	[3] = "Night Stick",
-	[4] = "Knife",
-	[5] = "Bat",
-	[6] = "Shovel",
-	[7] = "Pool Cue",
-	[8] = "Katana",
-	[9] = "Chainsaw",
-	[10] = "Purple Dildo",
-	[11] = "Dildo",
-	[12] = "Vibrator",
-	[13] = "Silver Vibrator",
-	[14] = "Flowers",
-	[15] = "Cane",
-	[16] = "Grenade",
-	[17] = "Teargas",
-	[18] = "Molotov",
-	[19] = "Unused",
-	[20] = "Unused",
-	[21] = "Unused",
-	[22] = "Colt 45",
-	[23] = "Silenced Pistol",
-	[24] = "Desert Eagle",
-	[25] = "Shotgun",
-	[26] = "Sawnoff-Shotgun",
-	[27] = "Combat Shotgun",
-	[28] = "Uzi",
-	[29] = "MP5",
-	[30] = "AK-47",
-	[31] = "M4",
-	[32] = "Tec-9",
-	[33] = "Country Rifle",
-	[34] = "Sniper Rifle",
-	[35] = "Rocket Launcher",
-	[36] = "Heat-Seeking RPG",
-	[37] = "Flamethrower",
-	[38] = "Minigun",
-	[39] = "Satchel Charges",
-	[40] = "Detonator",
-	[41] = "Spray Can",
-	[42] = "Fire Extinguisher",
-	[43] = "Camera",
-	[44] = "Night Vision",
-	[45] = "Thermal Goggles",
-	[46] = "Parachute",
-	[47] = "Fake Pistol",
-}
-
 local drpc = ffi.load("moonloader/lib/discord-rpc.dll")
 local rpc = ffi.new("DiscordRichPresence")
 
---[Your discord Keys]
-
-local discordAssets = {
-    AppID = "your_discord_App_Id",
-    largeImageKey = "uif_new", -- Your large image key asset
-    largeImageText = "play.uifserver.net:7776",
-}
-
-
 function main()
-
     if not isSampLoaded() or not isSampfuncsLoaded() then return end
 	while not isSampAvailable() do wait(2000) end
 
@@ -508,131 +451,110 @@ function main()
 		return
 	end
 
-	drpc.Discord_Initialize(discordAssets.AppID, 0, 0, "")
+	drpc.Discord_Initialize(uifAppAssets.appId, 0, 0, "")
 		
 	repeat
 		wait(0)
 	until isPlayerPlaying(playerHandle)
 	
 	rpc.startTimestamp = os.time()
-	
-	local stat = getIntStat(121)
-	local time = os.time()
-	local flag = false
-	local samp = 0
-	
-	if isSampLoaded() then
-		if isSampfuncsLoaded() then
-			samp = 2
-		else
-			print("Sampfuncs is required to work on samp mode.")
-			samp = 1
-		end
-	end
-	
 	local cped = ffi.cast("CPed*", getCharPointer(playerPed))
 
 	while true do
-		rpc.largeImageKey = discordAssets.largeImageKey
-		
-		if flag then
-			if samp == 2 then
-				local gameState = {
-					"None",
-					"Connecting",
-				    "Await Join",
-				    "Connected",
-				    "Restarting",
-					"Disconnected"
-				}
-
-                local zone = calculateZoneEN(getCharCoordinates(PLAYER_PED))
-                if isCharSittingInAnyCar(playerPed) then
-					local currCar = storeCarCharIsInNoSave(playerPed)
-					local gxtModel = getNameOfVehicleModel(getCarModel(currCar))
-					rpc.state = string.format("Driving a %s at %s", getGxtText(gxtModel), zone)
-				else
-					rpc.state = "Cruising at " .. zone
-				end
-
-
-				local result, pPed = sampGetPlayerIdByCharHandle(PLAYER_PED)
-                local nick = sampGetPlayerNickname(pPed)
-				rpc.details = "Playing as: ".. nick.. '('..pPed..')'
+        local zone = calculateZoneEN(getCharCoordinates(PLAYER_PED))
+        if isCharSittingInAnyCar(playerPed) then
+            local currCar = storeCarCharIsInNoSave(playerPed)
+            local gxtModel = getNameOfVehicleModel(getCarModel(currCar))
+            rpc.details = string.format("Driving %s down %s", getGxtText(gxtModel), zone)
+        else
+            if modeName == "Fall" then
+                if zone == "Bone County" or zone == "Hunter Quarry" then
+                    rpc.details = "Map name: Dancing Arena"
+                elseif zone == "Gant Bridge" or zone == "Tierra Robada" then
+                    rpc.details = "Map name: Sky Bridge"
+                elseif zone == "San Fierro" or zone == "Downtown" then
+                    rpc.details = "Map name: Pilot"
+                elseif zone == "Financial" then
+                    rpc.details = "Map name: Triangle Tower"
+                elseif zone == "Flint County" then
+                    rpc.details = "Map name: Observation Point"
+                elseif zone == "Blueberry Acres" then
+                    rpc.details = "Loading next map..."
+                    Fell = false
+                end
+            else
+                rpc.details = "Walking down " .. zone
             end
-			
-			if os.time() > time + 5 then
-				flag = false
-				time = os.time()
+        end
+
+        if modeName == "Fall" then -- Add modes within this if-else statement
+            rpc.state = "In ".. modeString
+            rpc.smallImageKey = "Your_Icon_Key"
+            rpc.smallImageText = string.format("%s", strSmall)
+
+            if zone == "Bone County" or zone == "Hunter Quarry" then
+                rpc.largeImageKey = "Your_Icon_Key"
+            elseif zone == "Gant Bridge" or zone == "Tierra Robada" then
+                rpc.largeImageKey = "Your_Icon_Key"
+            elseif zone == "San Fierro" or zone == "Downtown" then
+                rpc.largeImageKey = "Your_Icon_Key"
+            elseif zone == "Financial" then
+                rpc.largeImageKey = "Your_Icon_Key"
+            elseif zone == "Flint County" then
+                rpc.largeImageKey = "Your_Icon_Key"
+            elseif zone == "Blueberry Acres" then
+                Fell = false
             end
-		else
-            local zone = calculateZoneEN(getCharCoordinates(PLAYER_PED))
-                if isCharSittingInAnyCar(playerPed) then
-					local currCar = storeCarCharIsInNoSave(playerPed)
-					local gxtModel = getNameOfVehicleModel(getCarModel(currCar))
-					rpc.state = string.format("Driving a %s at %s", getGxtText(gxtModel), zone)
-				else
-					rpc.state = "Cruising at " .. zone
-				end
+        else
+            local currWeap = getCurrentCharWeapon(playerPed)
+            rpc.largeImageKey = uifAppAssets.uifLogoKey
+            rpc.smallImageKey = "weap_" .. currWeap -- Recommended to set keys as weap_1, weap_2, and so on.
+            rpc.smallImageText = string.format("play.uifserver.net:7776")
+            rpc.state = "In Freeroam with ".. sampGetPlayerCount(false) .. " players"
+        end
 
-
-				local result, pPed = sampGetPlayerIdByCharHandle(PLAYER_PED)
-                local nick = sampGetPlayerNickname(pPed)
-				rpc.details = "Playing as: ".. nick.. '('..pPed..')'
-             
-			local zone = calculateZoneEN(getCharCoordinates(PLAYER_PED))
-			local show = false
-			
-			if samp == 2 then
-				local state = sampGetGamestate()
-				
-				if state == 3 or state == 4 then
-					show = true
-				end
-			else 
-				show = true
-			end
-			
-			if show then
-				if isCharSittingInAnyCar(playerPed) then
-					local currCar = storeCarCharIsInNoSave(playerPed)
-					local gxtModel = getNameOfVehicleModel(getCarModel(currCar))
-					rpc.state = string.format("Driving a %s at %s", getGxtText(gxtModel), zone)
-				else
-					rpc.state = "Cruising at " .. zone
-				end
-			end
-			
-			if os.time() > time + 5 then
-				flag = true
-				time = os.time()
-			end
-		end
-
-		rpc.largeImageText = discordAssets.largeImageText
-
-		local currWeap = getCurrentCharWeapon(playerPed)
-		local wpName = weapons[currWeap] or ""
-		
-		rpc.smallImageKey = "weap_" .. (wpName ~= "" and currWeap or "added")
-
-		local slot = getWeapontypeSlot(currWeap)
-		local clip = cped.weapons[slot].ammoInClip
-		local total = cped.weapons[slot].totalAmmo
-
-		if slot <= 1 or slot >= 10 then
-			rpc.smallImageText = wpName
-		end
-
-		if slot == 3 or slot == 6 or slot == 7 or slot == 8 then
-			rpc.smallImageText = string.format("%s %d", wpName, total)
-		end
-
-		if slot == 2 or slot == 4 or slot == 5 or slot == 9 then
-			rpc.smallImageText = string.format("%s %d / %d", wpName, clip, total - clip)
-		end
+        local result, pPed = sampGetPlayerIdByCharHandle(PLAYER_PED)
+        local nick = sampGetPlayerNickname(pPed)
+        rpc.largeImageText = string.format("Playing as %s(%s)", nick, pPed)	
 
 		drpc.Discord_UpdatePresence(rpc)
 		wait(150)
 	end
 end
+
+function sampev.onSendCommand(cmd)
+	if cmd == "/fr" then
+	    modeName = "Freeroam"
+		modeString = "Freeroam with ".. sampGetPlayerCount(false) .. " players"
+	elseif cmd == "/fall" then
+		modeName = "Fall"
+	elseif cmd == "/derby" then
+		modeName = "Derby"
+	elseif cmd == "/ptp" then
+		modeName = "PTP"
+	elseif cmd == "/cnr" then
+		modeName = "CNR"
+	end
+end
+
+function sampev.onServerMessage(color, text)
+	local modeName, pNick, pID, pInfo, totalPlayers = string.match(text, "(.*): (.*)%((%d+)%) (.*) %(players: (%d+)%)")
+    local _, pPed = sampGetPlayerIdByCharHandle(PLAYER_PED)
+    local myName = sampGetPlayerNickname(pPed)
+
+    if modeName and pNick and pID and pInfo and totalPlayers then
+		if modeName == "FALL" then modeName = "Fall" elseif modeName == "DERBY" then modeName = "Derby" elseif modeName == "DEATHMATCH" then modeName = "DM" end
+		if tonumber(totalPlayers) > 1 then pstr = "players" else pstr = "player" end
+		modeString = string.format("%s mode with %s %s", modeName, totalPlayers, pstr)
+	end
+
+    local pName, pID2, position, positionTotal = string.match(text, "FALL: (.*)%((%d+)%) loses %(dropped%) %(position: (%d+)/(%d+)")
+    if pName and pID2 and position and positionTotal and not Fell then
+        strSmall = string.format("Standing (%s players)", position)
+        if pName == myName then
+            strSmall = string.format("Fell, spectating")
+            Fell = true
+        end
+    end
+end
+
