@@ -1,5 +1,6 @@
 ### UIF Discord Rich Presence Plugin
-UIF server San Andreas Multiplayer rich presence plugin powered by Lua and moonloader.
+UIF server San Andreas Multiplayer rich presence plugin powered by Lua and moonloader.<br>
+This repository is archived and is no more being maintained by me, feel free to create your own and edit as you wish.
 #
 ### Requirements
 - [ASI Loader](https://www.gtagarage.com/mods/show.php?id=21709)
