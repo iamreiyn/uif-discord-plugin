@@ -1,6 +1,7 @@
 ### UIF Discord Rich Presence Plugin
-UIF server San Andreas Multiplayer rich presence plugin powered by Lua and moonloader.<br>
-This repository is archived and is no more being maintained by me, feel free to create your own and edit as you wish.
+UIF server San Andreas Multiplayer rich presence plugin powered by Lua and Moonloader.<br>
+This repository is <b>archived</b> and is no more being maintained by me, feel free to fork your own and edit as you wish.<br><br>
+If you have any questions related to this plugin then feel free to contact me on Discord (<b>@renisal</b>)
 #
 ### Requirements
 - [ASI Loader](https://www.gtagarage.com/mods/show.php?id=21709)
@@ -17,24 +18,22 @@ Download and extract the contents of <b>[release](https://github.com/renisal/uif
 ### RPC Values
 
 While these are the values by default, you are free to edit the script as you like<br>
-And if you have any suggestions, feel free to suggest here or contact me on discord.
 
-| RPC Value | Value |
+| RPC Value | Information |
 | ------------- | ------------- |
-| **Freeroam mode**  |
-| Large Image  | UIF's Icon  |
-| Large Image Text  | Player Name & ID  |
-| Small Image  | Holding Weapon Icon  |
+| **FREEROAM & OTHER MODES**  | ___________  |
+| Large Image  | UIF's logo  |
+| Large Image Text  | PlayerName(ID)  |
+| Small Image  | Held weapon's icon  |
 | Small Image Text  | UIF Server IP  |
-| Details(1)  | Player's State (Driving/Walking)  |
-| Details(2)  | Current Mode  |
-| **Fall mode** |
-| Large Image  | Current Map Icon  |
-| Large Image Text  | Player Name & ID  |
-| Small Image  | -  |
-| Small Image Text  | Player's State (Lost/Standing)  |
+| Details(1)  | Player's state (Driving/Walking)  |
+| Details(2)  | Current mode with players  |
+| **FALL MODE** | ___________  |
+| Large Image  | Current Map icon  |
+| Large Image Text  | PlayerName(ID)  |
+| Small Image Text  | Player's state (Lost/Standing)  |
 | Details(1)  | Current Fall Map name  |
-| Details(2)  | Current Mode |
+| Details(2)  | Current mode with players |
 #
 ### Library
 
